@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perhitungan Skor Online</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Perhitungan Skor Online RBB BUMN 2024</h2>
+        <h3 class="text-center">by <a href="https://instagram.com/vickryab" target="_blank">pikriyyy</a></h2>
+        <p class="text-center">Disclaimer: Aplikasi ini tidak teraffiliasi dengan FHCI BUMN, dibuat hanya untuk memudahkan teman-teman menghitung perkiraan skor akhir sesuai bobot yang telah ditetapkan.</p>
+                <form id="scoreForm">
+            <div class="form-group">
+                <label for="tbiScore">Skor TBI:</label>
+                <input type="text" class="form-control" id="tbiScore" placeholder="Masukkan Skor TBI">
+            </div>
+            <div class="form-group">
+                <label for="learningAgilityScore">Skor Learning Agility:</label>
+                <input type="text" class="form-control" id="learningAgilityScore" placeholder="Masukkan Skor Learning Agility">
+            </div>
+            <div class="form-group">
+                <label for="testOnline1Score">Skor Tes Online 1:</label>
+                <input type="text" class="form-control" id="testOnline1Score" placeholder="Masukkan Skor Tes Online 1">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="calculateScores()">Hitung Skor</button>
+        </form>
+        <div class="mt-4">
+            <p id="resultTestOnline2"></p>
+            <p id="resultTotalScore"></p>
+            <div style="text-align: center;"><a href="https://www.freecounterstat.com" title="website counter"><img src="https://counter4.optistats.ovh/private/freecounterstat.php?c=8t2gekfe7awalznbjr4w8ke7jb9997jh" border="0" title="website counter" alt="website counter"></a> Orang telah terbantu dengan tools ini.</div>
+        </div>
+    </div>
+    
+    <script>
+        function parseInput(input) {
+            // Replace comma with dot and parse as float
+            return parseFloat(input.replace(',', '.'));
+        }
+
+        function calculateScores() {
+            // Ambil nilai input dan ganti koma dengan titik
+            const tbiScore = parseInput(document.getElementById('tbiScore').value);
+            const learningAgilityScore = parseInput(document.getElementById('learningAgilityScore').value);
+            const testOnline1Score = parseInput(document.getElementById('testOnline1Score').value);
+
+            // Periksa apakah input valid
+            if (isNaN(tbiScore) || isNaN(learningAgilityScore) || isNaN(testOnline1Score)) {
+                alert('Harap masukkan semua nilai dengan format yang benar.');
+                return;
+            }
+
+            // Hitung Persentase Skor TBI dan Learning Agility
+            const tbiPercentage = (tbiScore / 677) * 100;
+            const learningAgilityPercentage = (learningAgilityScore / 300) * 100;
+
+            // Hitung Hasil Tes Online 2
+            const testOnline2Score = (0.80 * tbiPercentage) + (0.20 * learningAgilityPercentage);
+
+            // Hitung Total Skor
+            const totalScore = (0.60 * testOnline1Score) + (0.40 * testOnline2Score);
+
+            // Tampilkan hasil
+            document.getElementById('resultTestOnline2').innerText = `Hasil Tes Online 2: ${testOnline2Score.toFixed(2)}`;
+            document.getElementById('resultTotalScore').innerText = `Total Skor (Test 1 + Test 2): ${totalScore.toFixed(2)}`;
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
